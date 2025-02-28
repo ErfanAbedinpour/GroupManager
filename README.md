@@ -97,3 +97,39 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+## TODO
+
+- [ ] Intial Bot With [grammy](https://grammy.dev/)
+- [ ] Creating Sqlite DB
+- [ ] Define User Command
+- [ ] Commands Actions
+- [ ] Ban/unBan User
+- [ ] Mute User
+- [ ] Remvoe BadMessages
+- [ ] Warning To User if send BadMessage(Max3)
+- [ ] Using Telegram session for storing State
+- [ ] Set User Permission Just Admin Can Using this Actions(Ban,unBan, Mute,unMute,Warning)
+- [ ] Set Webhook
+
+## Commands
+
+### Ban
+
+#### BadUser(reply on User) => /ban 30(By Hour)
+
+### unBan
+
+#### unBan(reply on User) => /unban
+
+### Mute
+
+#### Mute(reply on User Or User Message) => /mute 30(minutes)
+
+### unMute
+
+#### unMute(reply on User Or User Message) => /unMute 30(minutes)
+
+### Warning
+
+#### warning(reply on User Or User Message) => /warning (if user warning count reach to 3 user should be ban for 1 day)
