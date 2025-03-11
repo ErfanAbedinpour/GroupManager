@@ -3,6 +3,7 @@ import { BotService } from "./bot.service";
 
 @Global()
 @Module({
+    exports: [BotService],
     providers: [BotService]
 })
 export class BotModule { }

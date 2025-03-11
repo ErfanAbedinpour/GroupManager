@@ -1,22 +1,23 @@
-import { Injectable, Logger, OnApplicationBootstrap } from "@nestjs/common";
+import { Injectable, OnApplicationBootstrap } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Bot } from 'grammy'
 import { IEnv } from "../interface/env.interface";
+import { BotCommand } from "../command/abstract/command.abstract";
 
 @Injectable()
 export class BotService implements OnApplicationBootstrap {
-    private bot: Bot;
-    onApplicationBootstrap() {
-        this.bot.command('start', (ctx) => {
-            return ctx.reply("Hello From Bot")
-        })
+    protected bot: Bot;
 
+    onApplicationBootstrap() {
         void this.bot.start();
     }
 
     constructor(private readonly config: ConfigService<IEnv>) {
-        // get Bot Token 
         const token = this.config.getOrThrow("BOT_TOKEN");
         this.bot = new Bot(token)
+    }
+
+    registerCommand(eventName: string, eventAction: BotCommand) {
+        this.bot.command(eventName, eventAction.doProcess)
     }
 }
