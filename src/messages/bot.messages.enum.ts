@@ -1,6 +1,6 @@
 export enum BotMessages {
 
-    welcomeMessage = `askdf`,
+    welcomeMessage = `خوش امدید`,
 
     startMessages = `✨ به بات تلگرام خوش آمدید! ✨
 
