@@ -1,6 +1,6 @@
 import { CommandContext, Context } from "grammy";
 
-export abstract class BotCommand {
 
-    abstract doProcess(ctx: CommandContext<Context>): Promise<void>
+export abstract class BotCommand<T extends 'command' | "event" = "command"> {
+    abstract doProcess(ctx: T extends "command" ? CommandContext<Context> : unknown): Promise<void>
 }

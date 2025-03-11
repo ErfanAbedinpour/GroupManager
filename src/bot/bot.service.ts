@@ -1,6 +1,6 @@
 import { Injectable, OnApplicationBootstrap } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { Bot } from 'grammy'
+import { Bot, FilterQuery } from 'grammy'
 import { IEnv } from "../interface/env.interface";
 import { BotCommand } from "../command/abstract/command.abstract";
 
@@ -19,5 +19,9 @@ export class BotService implements OnApplicationBootstrap {
 
     registerCommand(eventName: string, eventAction: BotCommand) {
         this.bot.command(eventName, eventAction.doProcess)
+    }
+
+    registerEvent(eventName: FilterQuery, action: BotCommand<'event'>) {
+        this.bot.on(eventName, action.doProcess)
     }
 }

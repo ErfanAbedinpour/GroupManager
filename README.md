@@ -102,8 +102,7 @@ Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 
 - [x] init Bot With [grammy](https://grammy.dev/)
 - [ ] Creating Sqlite DB
-- [ ] Define User Command
-- [ ] Commands Actions
+- [x] Define User Command
 - [ ] Ban/unBan User
 - [ ] Mute User
 - [ ] remove BadMessages
