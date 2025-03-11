@@ -100,13 +100,13 @@ Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 
 ## TODO
 
-- [ ] Intial Bot With [grammy](https://grammy.dev/)
+- [x] init Bot With [grammy](https://grammy.dev/)
 - [ ] Creating Sqlite DB
 - [ ] Define User Command
 - [ ] Commands Actions
 - [ ] Ban/unBan User
 - [ ] Mute User
-- [ ] Remvoe BadMessages
+- [ ] remove BadMessages
 - [ ] Warning To User if send BadMessage(Max3)
 - [ ] Using Telegram session for storing State
 - [ ] Set User Permission Just Admin Can Using this Actions(Ban,unBan, Mute,unMute,Warning)
@@ -120,7 +120,7 @@ Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 
 ### unBan
 
-#### unBan(reply on User) => /unban
+#### unBan(reply on User) => /unBan
 
 ### Mute
 

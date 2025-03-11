@@ -7,7 +7,6 @@ import { IEnv } from "../interface/env.interface";
 export class BotService implements OnApplicationBootstrap {
     private bot: Bot;
     onApplicationBootstrap() {
-
         this.bot.command('start', (ctx) => {
             return ctx.reply("Hello From Bot")
         })
