@@ -18,11 +18,9 @@ export function AuthorizationMiddleware(...permissions: Permission[]) {
             if (permissions.length === 0)
                 return await next()
 
-            for (const permission of permissions) {
-                if (!user[permission] && user['status'] === 'administrator') {
-                    throw new Error("شما دسترسی استفاده از این کامند را ندارید")
-                }
-            }
+
+            if (user.status === 'administrator' && !permissions.every((permission) => user[permission]))
+                throw new Error("شما دسترسی استفاده از این کامند را ندارید")
 
             return await next()
 
