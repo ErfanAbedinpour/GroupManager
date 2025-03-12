@@ -1,7 +1,7 @@
 import { Context, NextFunction } from "grammy";
 import { Permission } from "../enums/permission.enum";
 
-export function AuthorizationMiddleware(permissions?: Permission[]) {
+export function AuthorizationMiddleware(...permissions: Permission[]) {
 
     return async function (ctx: Context, next: NextFunction): Promise<void> {
         const fromId = ctx.from?.id;
@@ -15,7 +15,7 @@ export function AuthorizationMiddleware(permissions?: Permission[]) {
             if (!user)
                 throw new Error("فقط ادمین میتواند از ایم کامند استفاده کند")
 
-            if (!permissions)
+            if (permissions.length === 0)
                 return await next()
 
             for (const permission of permissions) {
