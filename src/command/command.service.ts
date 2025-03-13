@@ -7,6 +7,7 @@ import { isMemberMiddleware } from "../middleware/isMember.middleware";
 import { AuthorizationMiddleware } from "../middleware/auth.middleware";
 import { Permission } from "../enums/permission.enum";
 import { UnBanCommand } from "./unBan/unBan.service";
+import { MuteCommand } from "./mute/mute.service";
 
 @Injectable()
 export class CommandService implements OnModuleInit {
@@ -16,6 +17,7 @@ export class CommandService implements OnModuleInit {
         this.botService.registerCommand("start", this.startCommand.doProcess.bind(this.startCommand))
         this.botService.registerCommand("ban", AuthorizationMiddleware(Permission.can_restrict_members), this.banCommand.doProcess.bind(this.banCommand))
         this.botService.registerCommand("free", AuthorizationMiddleware(Permission.can_restrict_members), this.unBanCommand.doProcess.bind(this.unBanCommand))
+        this.botService.registerCommand("mute", AuthorizationMiddleware(Permission.can_restrict_members), this.muteCommand.doProcess.bind(this.muteCommand))
         this.botService.registerEvent("message:new_chat_members", this.newMemberHandler.doProcess.bind(this.newMemberHandler))
     }
 
@@ -24,6 +26,7 @@ export class CommandService implements OnModuleInit {
         private readonly botService: BotService,
         private readonly banCommand: BanCommand,
         private readonly unBanCommand: UnBanCommand,
+        private readonly muteCommand: MuteCommand,
         private readonly newMemberHandler: NewMemberJoinHandler
     ) { }
 }
