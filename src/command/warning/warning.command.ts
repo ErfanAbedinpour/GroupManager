@@ -57,6 +57,7 @@ export class WarningCommand implements BotCommand {
 
     increaseWarning(user_id: number) {
         let { warningCount, isBan, isMuted } = sessionStorage.read(`user-${user_id}`) || { warningCount: 0, isBan: false, isMuted: false }
+        console.log("user data is ", { isBan, isMuted })
         if (isBan || isMuted)
             throw new InvalidCommandException("کاربر بن یا میتون شده است")
         return ++warningCount

@@ -1,6 +1,7 @@
-import { CommandContext, Context, GrammyError } from "grammy";
+import { GrammyError } from "grammy";
 import { BotCommand } from "../abstract/command.abstract";
 import { Command } from "../../types/global.type";
+import { sessionStorage } from "../../storage/session-storage";
 
 export class BanCommand implements BotCommand {
     async doProcess(ctx: Command): Promise<void> {
@@ -50,6 +51,11 @@ export class BanCommand implements BotCommand {
         }
     }
 
+
+    updateSession(user_id: number): void {
+        const { isMuted, warningCount } = sessionStorage.read(`user-${user_id}`) || { isMuted: false, warningCount: 0 }
+        sessionStorage.write(`user-${user_id}`, { warningCount, isBan: true, isMuted })
+    }
 
     private banChatMember(ctx: Command, date: number, user_id: number) {
         return ctx.banChatMember(user_id, { revoke_messages: true, until_date: date })

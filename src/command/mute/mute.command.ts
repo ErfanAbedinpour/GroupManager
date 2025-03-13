@@ -5,6 +5,7 @@ import { BadArgument } from "../../exceptions/argument.exception";
 import { Command } from "../../types/global.type";
 import { UnexpectedException } from "../../exceptions/unknown.exception";
 import { Logger } from "@nestjs/common";
+import { sessionStorage } from "../../storage/session-storage";
 
 export class MuteCommand implements BotCommand {
     private logger = new Logger(MuteCommand.name)
@@ -28,6 +29,9 @@ export class MuteCommand implements BotCommand {
             if (!result)
                 throw new UnexpectedException("ارور ناشناخته لطفا بعدا دوباره امتحان کنید")
 
+
+            this.updateSession(targetUser);
+
             ctx.reply("کاربر با موفقیت میوت شد ", { reply_parameters: { message_id: msgId } });
             return
         } catch (err) {
@@ -38,8 +42,17 @@ export class MuteCommand implements BotCommand {
         }
     }
 
-    private muteUser(ctx: Command, user_id: number, until: number) {
-        console.log('stamp is ', until)
+    updateSession(user_id: number): void {
+        const { warningCount, isBan } = sessionStorage.read(`user-${user_id}`) || { isBan: false, warningCount: 0 }
+
+        sessionStorage.write(`user-${user_id}`, {
+            warningCount,
+            isBan,
+            isMuted: true
+        })
+    }
+
+    muteUser(ctx: Command, user_id: number, until: number) {
         return ctx.restrictChatMember(user_id, {
             can_change_info: false,
             can_invite_users: false,
