@@ -1,8 +1,10 @@
-import { CommandContext, Context, GrammyError } from "grammy";
+import { GrammyError } from "grammy";
 import { BotCommand } from "../abstract/command.abstract";
+import { Command } from "../../types/global.type";
+import { sessionStorage } from "../../storage/session-storage";
 
 export class BanCommand implements BotCommand {
-    async doProcess(ctx: CommandContext<Context>): Promise<void> {
+    async doProcess(ctx: Command): Promise<void> {
         const targetUser = ctx.message?.reply_to_message?.from?.id;
         const length = ctx.message!.entities[0].length
         const date = Number(ctx.message!.text.slice(length));
@@ -17,8 +19,10 @@ export class BanCommand implements BotCommand {
 
             if (!date)
                 throw new Error("لطفا کامند را در فرمت درست بفرستید")
+            // convert Date To TimeStamp
+            const stamp = (date * 24 * 60 * 60 * 1000) + Date.now();
 
-            const result = await this.banChatMember(ctx, date, targetUser)
+            const result = await this.banChatMember(ctx, stamp, targetUser)
 
             if (!result)
                 throw new Error("اروری در هنگام بن رخ داد لطفا بعدا دوباره امتحان کنید")
@@ -48,10 +52,13 @@ export class BanCommand implements BotCommand {
     }
 
 
-    private banChatMember(ctx: CommandContext<Context>, date: number, user_id: number) {
-        // convert Date To TimeStamp
-        const until = date * 24 * 60 * 60 * 1000 + Date.now();
-        return ctx.banChatMember(user_id, { revoke_messages: true, until_date: until })
+    updateSession(user_id: number): void {
+        const { isMuted, warningCount } = sessionStorage.read(`user-${user_id}`) || { isMuted: false, warningCount: 0 }
+        sessionStorage.write(`user-${user_id}`, { warningCount, isBan: true, isMuted })
+    }
+
+    private banChatMember(ctx: Command, date: number, user_id: number) {
+        return ctx.banChatMember(user_id, { revoke_messages: true, until_date: date })
     }
 
 }

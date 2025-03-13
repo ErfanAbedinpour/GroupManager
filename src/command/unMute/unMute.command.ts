@@ -4,10 +4,11 @@ import { Command } from "../../types/global.type";
 import { BotException } from "../../exceptions/bot.exception";
 import { InvalidCommandException } from "../../exceptions/invalid-command.exception";
 import { UnexpectedException } from "../../exceptions/unknown.exception";
+import { sessionStorage } from "../../storage/session-storage";
 
 export class UnmuteCommand implements BotCommand {
 
-    async doProcess(ctx: CommandContext<Context>): Promise<void> {
+    async doProcess(ctx: Command): Promise<void> {
         const msgId = ctx.message!.message_id
         const targetUserId = ctx.message?.reply_to_message?.from?.id
         const targetUserName = ctx.message?.reply_to_message?.from?.first_name
@@ -22,6 +23,7 @@ export class UnmuteCommand implements BotCommand {
                 throw new UnexpectedException("خطایی رخ داد لطفا بعدا دوباره امتحان کنید")
 
 
+            this.updateSession(targetUserId)
             ctx.reply(`${targetUserName} با موفیت ازاد شد`, { reply_parameters: { message_id: msgId } })
 
         } catch (err) {
@@ -29,6 +31,11 @@ export class UnmuteCommand implements BotCommand {
                 ctx.reply(err.message, { reply_parameters: { message_id: msgId } })
         }
 
+    }
+
+    updateSession(user_id: number): void {
+        const { isBan, warningCount } = sessionStorage.read(`user-${user_id}`) || { isBan: false, warningCount: 0 }
+        sessionStorage.write(`user-${user_id}`, { warningCount, isBan, isMuted: false })
     }
 
     private unMuteUser(ctx: Command, userId: number) {
