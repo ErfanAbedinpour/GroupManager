@@ -5,6 +5,7 @@ import { IEnv } from "../interface/env.interface";
 import { Middleware } from "../types/middleware.types";
 import { MyContext } from "../types/context.type";
 import { initial } from "../middleware/session-init.middleware";
+import { sessionStorage } from "../storage/free.storage";
 
 @Injectable()
 export class BotService implements OnApplicationBootstrap {
@@ -17,7 +18,12 @@ export class BotService implements OnApplicationBootstrap {
     constructor(private readonly config: ConfigService<IEnv>) {
         const token = this.config.getOrThrow("BOT_TOKEN");
         this.bot = new Bot<MyContext>(token)
-        this.bot.use(session({ initial: initial }))
+        this.bot.use(session({
+            initial: initial,
+            getSessionKey: (ctx) => ctx.from?.id.toString(),
+            prefix: "user-",
+            storage: sessionStorage,
+        }))
     }
 
     registerCommand(eventName: string, ...eventActions: Middleware[]) {

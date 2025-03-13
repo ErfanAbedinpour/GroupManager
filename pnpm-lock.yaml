@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@grammyjs/storage-free':
+        specifier: ^2.5.0
+        version: 2.5.0
       '@nestjs/common':
         specifier: ^11.0.1
         version: 11.0.11(reflect-metadata@0.2.2)(rxjs@7.8.2)
@@ -345,6 +348,9 @@ packages:
   '@eslint/plugin-kit@0.2.7':
     resolution: {integrity: sha512-JubJ5B2pJ4k4yGxaNLdbjrnk9d/iDz6/q8wOilpIowd6PJPgaxCuHBnBszq7Ce2TyMrywm5r4PnKm6V3iiZF+g==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@grammyjs/storage-free@2.5.0':
+    resolution: {integrity: sha512-Wg1D/SlYWtCSg0SymN4QvY6hEOhLO7QDePkeHHmPX4mjL0rOn/HBgk4QKaS4K1VrY6a/pCS3W141gfl43vgvOg==}
 
   '@grammyjs/types@3.19.0':
     resolution: {integrity: sha512-N0MS+RJG+AGSNuka1GWVj88oyK1oti4I0eQq6jGo4hic3P9MwFfnHjGQuIExZ3tlJUrZYwC/T7gk4Tu3+guJyg==}
@@ -3712,6 +3718,12 @@ snapshots:
     dependencies:
       '@eslint/core': 0.12.0
       levn: 0.4.1
+
+  '@grammyjs/storage-free@2.5.0':
+    dependencies:
+      node-fetch: 2.7.0
+    transitivePeerDependencies:
+      - encoding
 
   '@grammyjs/types@3.19.0': {}
 
