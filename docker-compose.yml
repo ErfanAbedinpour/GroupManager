@@ -6,11 +6,12 @@ services:
     ports:
       - '3000:${PORT}'
     volumes:
-      - ./:/app
+      - .:/app
     networks:
       - app-net
     env_file:
       - .env
+    command: ["pnpm", "run","start:dev"]
   
 networks:
   app-net:
