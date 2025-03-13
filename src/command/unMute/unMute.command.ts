@@ -7,7 +7,7 @@ import { UnexpectedException } from "../../exceptions/unknown.exception";
 
 export class UnmuteCommand implements BotCommand {
 
-    async doProcess(ctx: CommandContext<Context>): Promise<void> {
+    async doProcess(ctx: Command): Promise<void> {
         const msgId = ctx.message!.message_id
         const targetUserId = ctx.message?.reply_to_message?.from?.id
         const targetUserName = ctx.message?.reply_to_message?.from?.first_name

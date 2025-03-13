@@ -1,8 +1,10 @@
 import { Injectable, OnApplicationBootstrap } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { Bot, FilterQuery } from 'grammy'
+import { Bot, FilterQuery, session } from 'grammy'
 import { IEnv } from "../interface/env.interface";
 import { Middleware } from "../types/middleware.types";
+import { MyContext } from "../types/context.type";
+import { initial } from "../middleware/session-init.middleware";
 
 @Injectable()
 export class BotService implements OnApplicationBootstrap {
@@ -14,7 +16,8 @@ export class BotService implements OnApplicationBootstrap {
 
     constructor(private readonly config: ConfigService<IEnv>) {
         const token = this.config.getOrThrow("BOT_TOKEN");
-        this.bot = new Bot(token)
+        this.bot = new Bot<MyContext>(token)
+        this.bot.use(session({ initial: initial }))
     }
 
     registerCommand(eventName: string, ...eventActions: Middleware[]) {

@@ -1,8 +1,9 @@
 import { CommandContext, Context, GrammyError } from "grammy";
 import { BotCommand } from "../abstract/command.abstract";
+import { Command } from "../../types/global.type";
 
 export class BanCommand implements BotCommand {
-    async doProcess(ctx: CommandContext<Context>): Promise<void> {
+    async doProcess(ctx: Command): Promise<void> {
         const targetUser = ctx.message?.reply_to_message?.from?.id;
         const length = ctx.message!.entities[0].length
         const date = Number(ctx.message!.text.slice(length));
@@ -50,7 +51,7 @@ export class BanCommand implements BotCommand {
     }
 
 
-    private banChatMember(ctx: CommandContext<Context>, date: number, user_id: number) {
+    private banChatMember(ctx: Command, date: number, user_id: number) {
         return ctx.banChatMember(user_id, { revoke_messages: true, until_date: date })
     }
 
