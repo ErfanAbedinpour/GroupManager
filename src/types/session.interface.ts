@@ -1,3 +1,5 @@
 export interface SessionData {
-    warningCount: number
+    warningCount: number,
+    isBan: boolean,
+    isMuted: boolean
 }
