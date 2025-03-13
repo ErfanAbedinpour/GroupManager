@@ -5,9 +5,10 @@ import { NewMemberJoinHandler } from "./events/onJoinedToGroup";
 import { BanCommand } from "./ban/ban.command";
 import { UnBanCommand } from "./unBan/unBan.service";
 import { MuteCommand } from "./mute/mute.service";
+import { UnmuteCommand } from "./unMute/unMute.command";
 
 @Module({
-    providers: [StartCommand, CommandService, NewMemberJoinHandler, BanCommand, UnBanCommand, MuteCommand]
+    providers: [StartCommand, CommandService, NewMemberJoinHandler, BanCommand, UnBanCommand, MuteCommand, UnmuteCommand]
 })
 export class CommandModule {
 }
