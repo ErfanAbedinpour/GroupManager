@@ -5,7 +5,7 @@ import { IEnv } from "../interface/env.interface";
 import { Middleware } from "../types/middleware.types";
 import { MyContext } from "../types/context.type";
 import { initial } from "../middleware/session-init.middleware";
-import { sessionStorage } from "../storage/free.storage";
+import { sessionStorage } from "../storage/session-storage";
 
 @Injectable()
 export class BotService implements OnApplicationBootstrap {
@@ -22,7 +22,7 @@ export class BotService implements OnApplicationBootstrap {
             initial: initial,
             getSessionKey: (ctx) => ctx.from?.id.toString(),
             prefix: "user-",
-            storage: sessionStorage,
+            storage: sessionStorage
         }))
     }
 
