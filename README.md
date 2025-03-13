@@ -107,8 +107,8 @@ Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 - [x] Mute User
 - [x] unMute User
 - [ ] remove BadMessages
-- [ ] Warning To User if send BadMessage(Max3)
-- [ ] Using Telegram session for storing State
+- [x] Warning To User if send BadMessage(Max3)
+- [x] Using Telegram session for storing State
 - [x] Set User Permission Just Admin Can Using this Actions(Ban,unBan, Mute,unMute,Warning)
 - [ ] Set Webhook
 
