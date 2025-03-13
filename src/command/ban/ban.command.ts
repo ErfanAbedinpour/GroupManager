@@ -17,8 +17,10 @@ export class BanCommand implements BotCommand {
 
             if (!date)
                 throw new Error("لطفا کامند را در فرمت درست بفرستید")
+            // convert Date To TimeStamp
+            const stamp = (date * 24 * 60 * 60 * 1000) + Date.now();
 
-            const result = await this.banChatMember(ctx, date, targetUser)
+            const result = await this.banChatMember(ctx, stamp, targetUser)
 
             if (!result)
                 throw new Error("اروری در هنگام بن رخ داد لطفا بعدا دوباره امتحان کنید")
@@ -49,9 +51,7 @@ export class BanCommand implements BotCommand {
 
 
     private banChatMember(ctx: CommandContext<Context>, date: number, user_id: number) {
-        // convert Date To TimeStamp
-        const until = date * 24 * 60 * 60 * 1000 + Date.now();
-        return ctx.banChatMember(user_id, { revoke_messages: true, until_date: until })
+        return ctx.banChatMember(user_id, { revoke_messages: true, until_date: date })
     }
 
 }

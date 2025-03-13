@@ -22,7 +22,9 @@ export class MuteCommand implements BotCommand {
             if (!timeInMinute)
                 throw new BadArgument("لطفا فرمت درست وارد کنید برای دیدن فرمت درست لطفا /start رو بزنید")
 
-            const result = await this.muteUser(ctx, targetUser, timeInMinute * 60 * 1000 + Date.now())
+            const stamp = (timeInMinute * 60 * 1000) + Date.now()
+            const result = await this.muteUser(ctx, targetUser, stamp)
+
             if (!result)
                 throw new UnexpectedException("ارور ناشناخته لطفا بعدا دوباره امتحان کنید")
 
@@ -37,6 +39,7 @@ export class MuteCommand implements BotCommand {
     }
 
     private muteUser(ctx: Command, user_id: number, until: number) {
+        console.log('stamp is ', until)
         return ctx.restrictChatMember(user_id, {
             can_change_info: false,
             can_invite_users: false,

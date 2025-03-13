@@ -3,8 +3,8 @@ import { StartCommand } from "./start/start.command";
 import { CommandService } from "./command.service";
 import { NewMemberJoinHandler } from "./events/onJoinedToGroup";
 import { BanCommand } from "./ban/ban.command";
-import { UnBanCommand } from "./unBan/unBan.service";
-import { MuteCommand } from "./mute/mute.service";
+import { UnBanCommand } from "./unBan/unBan.command";
+import { MuteCommand } from "./mute/mute.command";
 import { UnmuteCommand } from "./unMute/unMute.command";
 
 @Module({
