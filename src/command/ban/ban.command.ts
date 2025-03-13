@@ -1,4 +1,4 @@
-import { CommandContext, Context } from "grammy";
+import { CommandContext, Context, GrammyError } from "grammy";
 import { BotCommand } from "../abstract/command.abstract";
 
 export class BanCommand implements BotCommand {
@@ -7,10 +7,13 @@ export class BanCommand implements BotCommand {
         const length = ctx.message!.entities[0].length
         const date = Number(ctx.message!.text.slice(length));
 
+        const msgId = ctx.message!.message_id
         try {
 
             if (!targetUser)
                 throw new Error("لطفا روی کاربر مورد نظر ریپلای کنید")
+
+            const targetFirstName = ctx.message!.reply_to_message!.from!.first_name
 
             if (!date)
                 throw new Error("لطفا کامند را در فرمت درست بفرستید")
@@ -20,9 +23,27 @@ export class BanCommand implements BotCommand {
             if (!result)
                 throw new Error("اروری در هنگام بن رخ داد لطفا بعدا دوباره امتحان کنید")
 
+
+            ctx.reply(`${targetFirstName} با موفیت بن شد`, { reply_parameters: { message_id: msgId } });
+
             return
         } catch (err) {
-            ctx.reply(err.message)
+            let msg = err.message;
+
+            if (err instanceof GrammyError) {
+                switch (err.error_code) {
+                    case 400: {
+                        msg = "کاربر وجود ندارد"
+                        break;
+                    }
+
+                    case 403: {
+                        msg = "شما دسترسی بن کردن ندارید"
+                    }
+                }
+            }
+            ctx.reply(msg, { reply_parameters: { message_id: msgId } })
+            console.error(err)
         }
     }
 
